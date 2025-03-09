@@ -1,0 +1,8 @@
+<input
+    id="taskInput"
+    type="text"
+    placeholder="What needs to be done?"
+    autofocus
+    [(ngModel)]="inputValue"
+    (keyup.enter)="addTaskToService($event)"
+>

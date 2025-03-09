@@ -1,21 +1,16 @@
 import { TestBed } from '@angular/core/testing';
+
 import { AppComponent } from './app.component';
+import { TaskInputComponent } from './components/task-input/task-input.component';
 
 describe('AppComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    declarations: [AppComponent]
+    declarations: [AppComponent, TaskInputComponent]
   }));
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('monsterlessonsacademy-todoApp app is running!');
   });
 });
