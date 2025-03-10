@@ -12,11 +12,6 @@ export class TaskService {
   private tasksSubject = new BehaviorSubject<TaskInterface[]>([])
   public tasks$ = this.tasksSubject.asObservable()
 
-  addTask(taskText: string) {
-    const newTask = this.createTask(taskText)
-    this.tasksSubject.next(this.tasksSubject.value.concat(newTask))
-  }
-
   private createTask(taskText: string): TaskInterface {
     return {
       id: uuidv4(),
@@ -25,16 +20,17 @@ export class TaskService {
     }
   }
 
-  toggleTask(id: string) {
-    // const updatedTasks = this.tasksSubject.value.map(task => {
-    //   console.log(task)
-    //   if (task.id === id) {
-    //     return { ...task, isCompleted: !task.isCompleted }
-    //   }
-    //   return task
-    // })
-    // this.tasksSubject.next(updatedTasks)
+  addTask(taskText: string) {
+    const newTask = this.createTask(taskText)
+    this.tasksSubject.next(this.tasksSubject.value.concat(newTask))
   }
 
-
+  toggleTask(id: string) {
+    const tasks = this.tasksSubject.getValue();
+    const updatedTasks = tasks.map(task =>
+      task.id === id ? { ...task, isCompleted: !task.isCompleted } : task
+    );
+    this.tasksSubject.next(updatedTasks);
+    console.table(this.tasksSubject.getValue())
+  }
 }

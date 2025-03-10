@@ -15,20 +15,12 @@ export class TaskBoxComponent implements OnInit {
   constructor(private service: TaskService) { }
 
   ngOnInit(): void {
-    this.service.tasks$.subscribe((taskList) => {
+    this.service.tasks$.subscribe(taskList => {
       this.tasks = taskList
     })
-    // this.testTaks()
   }
 
   toggleCompletion(task: TaskInterface): void {
-    // console.log(task.isCompleted)
-    // this.service.toggleTask(task.id)
+    this.service.toggleTask(task.id);
   }
-
-  // testTaks() {
-  //   this.service.addTask('Bruno')
-  //   this.toggleCompletion(this.tasks[0])
-  //   console.table(this.tasks)
-  // }
 }
