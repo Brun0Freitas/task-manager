@@ -4,5 +4,6 @@
     placeholder="What needs to be done?"
     autofocus
     [(ngModel)]="inputValue"
-    (keyup.enter)="addTaskToService($event)"
->
+    (keyup.enter)="addTaskToService()"
+    >
+    <!-- (keyup.enter)="addTaskToService($event)" -->

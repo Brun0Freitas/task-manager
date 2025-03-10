@@ -13,11 +13,10 @@ export class TaskInputComponent {
 
   constructor(private service: TaskService) { }
 
-  addTaskToService(event: Event) {
-    this.inputValue = (event.target as HTMLInputElement).value
-
-    if (this.inputValue.trim() !== '') {
-      this.service.addTask(this.inputValue)
+  addTaskToService() {
+    const taskText = this.inputValue.trim()
+    if (taskText !== '') {
+      this.service.addTask(taskText)
       this.inputValue = ''
     }
   }
