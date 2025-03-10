@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { TaskService } from './service/task-service.service';
 import { AppComponent } from './app.component';
 import { TaskInputComponent } from './components/task-input/task-input.component';
-import { TaskBoxComponent } from './components/task/taskBox.component';
+import { TaskBoxComponent } from './components/task-box/task-box.component';
 
 @NgModule({
   declarations: [

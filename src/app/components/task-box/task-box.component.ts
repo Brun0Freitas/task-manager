@@ -5,8 +5,8 @@ import { TaskInterface } from 'src/app/types/taskInterface';
 
 @Component({
   selector: 'app-task-box',
-  templateUrl: './taskBox.component.html',
-  styleUrls: ['./taskBox.component.css']
+  templateUrl: './task-box.component.html',
+  styleUrls: ['./task-box.component.css']
 })
 
 export class TaskBoxComponent implements OnInit {

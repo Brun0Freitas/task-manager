@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { of } from 'rxjs';
 
 import { TaskInputComponent } from './task-input.component';
 import { TaskService } from 'src/app/service/task-service.service';
 
 class MockTaskService {
-  addTask(taskText: string): void { }
+  addTask = jasmine.createSpy('addTask')
 }
 
 describe('TaskInputComponent', () => {
@@ -32,21 +33,18 @@ describe('TaskInputComponent', () => {
   });
 
   it('should call addTask on the service when input is not empty', () => {
-    spyOn(mockService, 'addTask')
     component.inputValue = 'new task'
     component.addTaskToService();
     expect(mockService.addTask).toHaveBeenCalledWith('new task')
   })
 
   it('should NOT call addTask on the service when input is only spaces', () => {
-    spyOn(mockService, 'addTask')
     component.inputValue = '   '
     component.addTaskToService()
     expect(mockService.addTask).not.toHaveBeenCalled()
   })
 
   it('should NOT call addTask on the service when input is empty', () => {
-    spyOn(mockService, 'addTask')
     component.inputValue = ''
     component.addTaskToService()
     expect(mockService.addTask).not.toHaveBeenCalled()
@@ -59,7 +57,6 @@ describe('TaskInputComponent', () => {
   })
 
   it('should call addTask on the service with long input', () => {
-    spyOn(mockService, 'addTask')
     const longText = 'A'.repeat(10)
     component.inputValue = longText
     component.addTaskToService()
