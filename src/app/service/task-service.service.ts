@@ -25,12 +25,19 @@ export class TaskService {
     this.tasksSubject.next(this.tasksSubject.value.concat(newTask))
   }
 
-  toggleTask(id: string) {
+  toggleTaskStatus(id: string) {
     const tasks = this.tasksSubject.getValue();
     const updatedTasks = tasks.map(task =>
       task.id === id ? { ...task, isCompleted: !task.isCompleted } : task
     );
     this.tasksSubject.next(updatedTasks);
-    console.table(this.tasksSubject.getValue())
+  }
+
+  changeTaskName(id: string, newName: string) {
+    const tasks = this.tasksSubject.getValue();
+    const updatedTasks = tasks.map(task =>
+      task.id === id ? { ...task, text: newName } : task
+    );
+    this.tasksSubject.next(updatedTasks);
   }
 }

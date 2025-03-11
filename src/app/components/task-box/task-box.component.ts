@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
 import { TaskService } from 'src/app/service/task-service.service';
 import { TaskInterface } from 'src/app/types/taskInterface';
@@ -10,17 +10,45 @@ import { TaskInterface } from 'src/app/types/taskInterface';
 })
 
 export class TaskBoxComponent implements OnInit {
-  tasks: TaskInterface[] = []
+  taskList: TaskInterface[] = []
+
+  isEditing: boolean = false
+  editingTask: TaskInterface = { id: '', text: '', isCompleted: false }
+
+  @ViewChild('editInput') editInput?: ElementRef
 
   constructor(private service: TaskService) { }
 
   ngOnInit(): void {
     this.service.tasks$.subscribe(taskList => {
-      this.tasks = taskList
+      this.taskList = taskList
     })
   }
 
-  toggleCompletion(task: TaskInterface): void {
-    this.service.toggleTask(task.id);
+  toggleStatusInService(task: TaskInterface): void {
+    this.service.toggleTaskStatus(task.id);
+  }
+
+  setTaskInEditMode(task: TaskInterface) {
+    this.isEditing = true;
+    this.editingTask = task
+
+    setTimeout(() => {
+      this.editInput?.nativeElement.focus();
+      this.editInput?.nativeElement.select();
+    }, 0)
+  }
+
+  changeTaskNameInService() {
+    const id = this.editingTask.id;
+    const oldName = this.editingTask.text;
+    const newName = this.editInput?.nativeElement.value.trim();
+
+    if (newName && newName !== oldName) {
+      this.service.changeTaskName(id, newName)
+    }
+
+    this.isEditing = false
+    this.editingTask = { id: '', text: '', isCompleted: false }
   }
 }

@@ -1,0 +1,70 @@
+.task-box-container {
+  margin-top: 20px;
+}
+
+.task-box {
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  .task-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .task-item.editing {
+    border: 1px solid #4682b4;
+    background-color: #f0f8ff; 
+    /* background-color: #f0f8ff; 
+    border: 2px solid #4682b4;  */
+  }
+  
+  .task-checkbox {
+    margin-right: 15px;
+  }
+  
+  .task-label:hover {
+    color: #4CAF50;
+    text-decoration: underline;
+  }
+
+  .task-label.incomplete {
+    font-weight: bold;
+    color: #333;  /* Cor mais forte para tarefas incompletas */
+  }
+    
+  .task-label.completed {
+    text-decoration: line-through;
+    color: #999;
+  }
+
+  .edit-input {
+    font-size: 1rem;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    padding: 4px;
+  }
+/* 
+  .edit-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    box-sizing: border-box;
+  } */
+  
+  .edit-input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+  }

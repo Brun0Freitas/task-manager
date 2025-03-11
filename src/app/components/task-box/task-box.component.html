@@ -1,16 +1,33 @@
-<div *ngIf="tasks.length > 0; else noTasks">
-    <ul>
-        <li *ngFor="let task of tasks">
-            <input 
-                id="taskCheckbox"
-                type="checkbox" 
-                [checked]="task.isCompleted"
-                (change)="toggleCompletion(task)">
-            <span>{{ task.text }}</span>
-        </li>
-    </ul>
-</div>
+<div class="task-box-container">
+    <div class="task-box">
+        <ul>
+            <li 
+                class="task-item" 
+                *ngFor="let task of taskList"
+                [ngClass]="{'editing': task.id === editingTask.id}">
 
-<ng-template #noTasks>
-    <p>There are no tasks to display.</p>
-</ng-template>
+                <input 
+                    class="task-checkbox"
+                    type="checkbox" 
+                    [checked]="task.isCompleted"
+                    (change)="toggleStatusInService(task)"
+                >
+                
+                <label 
+                    class="task-label"
+                    [ngClass]="{'completed': task.isCompleted, 'incompleted': !task.isCompleted}"
+                    (dblclick)="setTaskInEditMode(task)">{{ task.text }}
+                </label>
+            </li>
+        </ul>
+    </div>
+    
+    <ng-container *ngIf="isEditing">
+        <input 
+            class="edit-input"
+            #editInput
+            [value] = 'editingTask.text'
+            (keyup.enter)="changeTaskNameInService()"
+        >
+    </ng-container>
+</div>

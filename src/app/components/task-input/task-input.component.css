@@ -1,0 +1,21 @@
+.task-input-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.task-input {
+    width: 80%;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    outline: none;
+    transition: all 0.3s ease;
+    margin: 20px auto;
+    display: block;
+  }
+  
+  .task-input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+  }
