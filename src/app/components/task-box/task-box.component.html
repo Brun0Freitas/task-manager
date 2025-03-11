@@ -1,9 +1,8 @@
 <div class="task-box-container">
     <div class="task-box">
         <ul>
-            <li 
+            <li *ngFor="let task of taskList"
                 class="task-item" 
-                *ngFor="let task of taskList"
                 [ngClass]="{'editing': task.id === editingTask.id}">
 
                 <input 
@@ -12,22 +11,26 @@
                     [checked]="task.isCompleted"
                     (change)="toggleStatusInService(task)"
                 >
-                
-                <label 
-                    class="task-label"
-                    [ngClass]="{'completed': task.isCompleted, 'incompleted': !task.isCompleted}"
-                    (dblclick)="setTaskInEditMode(task)">{{ task.text }}
-                </label>
+
+                <ng-container *ngIf="editingTask.id !== task.id; else editMode">
+                    <label 
+                        class="task-label"
+                        [ngClass]="{'completed': task.isCompleted, 'incompleted': !task.isCompleted}"
+                        (dblclick)="setTaskInEditMode(task)">
+                        {{ task.text }}
+                    </label>
+                </ng-container>
+
+                <ng-template #editMode>
+                    <input 
+                        class="edit-input"
+                        #editInput
+                        [value] = 'editingTask.text'
+                        (keyup.enter)="changeTaskNameInService()"
+                        (blur)="changeTaskNameInService()"
+                    >
+                </ng-template>
             </li>
         </ul>
     </div>
-    
-    <ng-container *ngIf="isEditing">
-        <input 
-            class="edit-input"
-            #editInput
-            [value] = 'editingTask.text'
-            (keyup.enter)="changeTaskNameInService()"
-        >
-    </ng-container>
 </div>
