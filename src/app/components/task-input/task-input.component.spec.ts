@@ -6,7 +6,8 @@ import { TaskInputComponent } from './task-input.component';
 import { TaskService } from 'src/app/service/task-service.service';
 
 class MockTaskService {
-  addTask = jasmine.createSpy('addTask')
+  addTask = jasmine.createSpy('addTask');
+  formatTaskName = jasmine.createSpy('formatTaskName');
 }
 
 describe('TaskInputComponent', () => {
@@ -32,8 +33,8 @@ describe('TaskInputComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call addTask on the service when input is not empty', () => {
-    component.inputValue = 'new task'
+  it('should call add Task on the service when input is not empty', () => {
+    component.inputValue = '   new task  name  '
     component.addTaskToService();
     expect(mockService.addTask).toHaveBeenCalledWith('new task')
   })

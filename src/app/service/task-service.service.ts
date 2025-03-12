@@ -20,8 +20,12 @@ export class TaskService {
     }
   }
 
-  addTask(taskText: string) {
-    const newTask = this.createTask(taskText)
+  formatTaskName(taskName: string): string {
+    return taskName.trim().replace(/\s+/g, ' ')
+  }
+
+  addTask(taskName: string) {
+    const newTask = this.createTask(taskName)
     this.tasksSubject.next(this.tasksSubject.value.concat(newTask))
   }
 
@@ -34,9 +38,11 @@ export class TaskService {
   }
 
   changeTaskName(id: string, newName: string) {
+    const formattedTaskName = this.formatTaskName(newName);
     const currentTasks = this.tasksSubject.getValue();
+
     const updatedTasks = currentTasks.map(task =>
-      task.id === id ? { ...task, text: newName } : task
+      task.id === id ? { ...task, text: formattedTaskName } : task
     );
     this.tasksSubject.next(updatedTasks);
   }

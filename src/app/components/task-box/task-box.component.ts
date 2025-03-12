@@ -42,7 +42,7 @@ export class TaskBoxComponent implements OnInit {
   changeTaskNameInService() {
     const id = this.editingTask.id;
     const oldName = this.editingTask.text;
-    const newName = this.editInput?.nativeElement.value.trim();
+    const newName = this.editInput?.nativeElement.value;
 
     if (newName && newName !== oldName) {
       this.service.changeTaskName(id, newName)
