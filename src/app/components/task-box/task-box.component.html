@@ -19,6 +19,18 @@
                         (dblclick)="setTaskInEditMode(task)">
                         {{ task.text }}
                     </label>
+                    <div class="task-actions">
+                        <button 
+                        class="edit-button"
+                        (click)="setTaskInEditMode(task)"
+                        >
+                        </button>
+                        <button 
+                            class="destroy-button"
+                            (click)="removeTaskFromService(task.id)"
+                            >
+                        </button>
+                    </div>
                 </ng-container>
 
                 <ng-template #editMode>

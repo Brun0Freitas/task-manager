@@ -9,6 +9,7 @@ import { ElementRef } from '@angular/core';
 class MockTaskService {
   toggleTaskStatus = jasmine.createSpy('toggleTaskStatus');
   changeTaskName = jasmine.createSpy('changeTaskName');
+  removeTask = jasmine.createSpy('removeTask');
   tasks$ = of([]);
 }
 
@@ -104,6 +105,12 @@ describe('TaskBoxComponent', () => {
     expect(mockService.changeTaskName).not.toHaveBeenCalled();
     expect(component.isEditing).toBe(false);
     expect(component.editingTask).toEqual({ id: '', text: '', isCompleted: false });
+  })
+
+  it('should request task removal in service with correct task id', () => {
+    const mockTaskID = '1';
+    component.removeTaskFromService(mockTaskID);
+    expect(mockService.removeTask).toHaveBeenCalledWith(mockTaskID)
   })
 
 });

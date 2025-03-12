@@ -51,4 +51,8 @@ export class TaskBoxComponent implements OnInit {
     this.isEditing = false
     this.editingTask = { id: '', text: '', isCompleted: false }
   }
+
+  removeTaskFromService(taskId: string) {
+    this.service.removeTask(taskId);
+  }
 }

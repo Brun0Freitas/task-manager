@@ -1,70 +1,162 @@
+/* Main container */
 .task-box-container {
   margin-top: 20px;
 }
 
 .task-box {
-    width: 80%;
-    margin: 0 auto;
-  }
-  
-  .task-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 15px;
-    border-bottom: 1px solid #ddd;
-    font-size: 1.1rem;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-  }
+  width: 80%;
+  margin: 0 auto;
+}
 
-  .task-item.editing {
-    border: 1px solid #4682b4;
-    background-color: #f0f8ff; 
-    /* background-color: #f0f8ff; 
-    border: 2px solid #4682b4;  */
-  }
-  
-  .task-checkbox {
-    margin-right: 15px;
-  }
-  
-  .task-label:hover {
-    color: #4CAF50;
-    text-decoration: underline;
-  }
+/* Style for each task item */
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
 
-  .task-label.incomplete {
-    font-weight: bold;
-    color: #333;  /* Cor mais forte para tarefas incompletas */
-  }
-    
-  .task-label.completed {
-    text-decoration: line-through;
-    color: #999;
-  }
+/* Effect when the task is in edit mode */
+.task-item.editing {
+  border: 1px solid #4682b4;
+  background-color: #f0f8ff;
+}
 
-  .edit-input {
-    font-size: 1rem;
-    width: 100%;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-family: inherit;
-    padding: 4px;
-  }
-/* 
-  .edit-input {
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    transition: all 0.3s ease;
-    margin-top: 10px;
-    box-sizing: border-box;
-  } */
-  
-  .edit-input:focus {
-    border-color: #4CAF50;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
-  }
+/* Checkbox style */
+.task-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  margin-right: 15px; /* Adjusts the space between the checkbox and the text */
+}
+
+/* Checkbox when checked */
+.task-checkbox:checked {
+  background-color: #4CAF50; /* Green color for checked */
+  border-color: #4CAF50;
+}
+
+/* Remove any extra content inside the checkbox */
+.task-checkbox:checked::after {
+  content: none;
+}
+
+/* Style when the checkbox is focused */
+.task-checkbox:focus {
+  outline: none;
+  box-shadow: 0 0 3px rgba(76, 175, 80, 0.5);
+}
+
+/* Hover effect on the checkbox */
+.task-checkbox:hover {
+  border-color: #7d7d7d;
+}
+
+.task-checkbox:checked:hover {
+  background-color: #45a049;
+}
+
+/* Style for the task text */
+.task-label {
+  flex-grow: 1;
+  text-align: left;
+  margin-left: 10px; /* Space between the checkbox and the text */
+}
+
+.task-label:hover {
+  color: #4CAF50;
+  text-decoration: underline;
+}
+
+.task-label.incomplete {
+  font-weight: bold;
+  color: #333; /* Stronger color for incomplete tasks */
+}
+
+.task-label.completed {
+  text-decoration: line-through;
+  color: #999;
+}
+
+/* Style for the task edit input */
+.edit-input {
+  font-size: 1rem;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  padding: 4px;
+}
+
+.edit-input:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+/* Container for the edit and delete buttons */
+.task-actions {
+  display: flex;
+  gap: 8px; /* Reduces the space between buttons */
+}
+
+/* Style for buttons */
+.edit-button,
+.destroy-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+/* Pencil icon (edit) */
+.edit-button::before {
+  content: '\270E'; /* Pencil icon */
+  font-size: 16px;
+  color: #4682b4;
+  transition: color 0.3s ease;
+}
+
+/* Style for the delete button */
+.destroy-button::before,
+.destroy-button::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 2px;
+  background-color: #d9534f;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.destroy-button::before {
+  transform: rotate(45deg);
+}
+
+.destroy-button::after {
+  transform: rotate(-45deg);
+}
+
+/* Hover effect on buttons */
+.edit-button:hover::before {
+  color: #2a5d9e;
+}
+
+.destroy-button:hover::before,
+.destroy-button:hover::after {
+  background-color: #c9302c;
+}

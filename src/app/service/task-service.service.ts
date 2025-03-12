@@ -26,18 +26,25 @@ export class TaskService {
   }
 
   toggleTaskStatus(id: string) {
-    const tasks = this.tasksSubject.getValue();
-    const updatedTasks = tasks.map(task =>
+    const currentTasks = this.tasksSubject.getValue();
+    const updatedTasks = currentTasks.map(task =>
       task.id === id ? { ...task, isCompleted: !task.isCompleted } : task
     );
     this.tasksSubject.next(updatedTasks);
   }
 
   changeTaskName(id: string, newName: string) {
-    const tasks = this.tasksSubject.getValue();
-    const updatedTasks = tasks.map(task =>
+    const currentTasks = this.tasksSubject.getValue();
+    const updatedTasks = currentTasks.map(task =>
       task.id === id ? { ...task, text: newName } : task
     );
+    this.tasksSubject.next(updatedTasks);
+  }
+
+  removeTask(taskID: string) {
+    const currentTasks = this.tasksSubject.getValue();
+    const updatedTasks = currentTasks.filter(task =>
+      task.id !== taskID);
     this.tasksSubject.next(updatedTasks);
   }
 }
