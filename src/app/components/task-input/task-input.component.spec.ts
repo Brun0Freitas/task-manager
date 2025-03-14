@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { of } from 'rxjs';
 
 import { TaskInputComponent } from './task-input.component';
 import { TaskService } from 'src/app/service/task-service.service';
@@ -13,15 +12,15 @@ class MockTaskService {
 describe('TaskInputComponent', () => {
   let component: TaskInputComponent;
   let fixture: ComponentFixture<TaskInputComponent>;
-  let mockService: MockTaskService;
+  let service: MockTaskService;
 
   beforeEach(() => {
-    mockService = new MockTaskService();
+    service = new MockTaskService();
 
     TestBed.configureTestingModule({
       declarations: [TaskInputComponent],
       imports: [FormsModule],
-      providers: [{ provide: TaskService, useValue: mockService }],
+      providers: [{ provide: TaskService, useValue: service }],
     });
 
     fixture = TestBed.createComponent(TaskInputComponent);
@@ -34,21 +33,25 @@ describe('TaskInputComponent', () => {
   });
 
   it('should call add Task on the service when input is not empty', () => {
-    component.inputValue = '   new task  name  '
+    const inputTask = '   new     task    ';
+    const formattedTask = 'new task'
+
+    component.inputValue = inputTask;
+    service.formatTaskName.and.returnValue(formattedTask);
     component.addTaskToService();
-    expect(mockService.addTask).toHaveBeenCalledWith('new task')
+    expect(service.addTask).toHaveBeenCalledWith(formattedTask);
   })
 
   it('should NOT call addTask on the service when input is only spaces', () => {
     component.inputValue = '   '
     component.addTaskToService()
-    expect(mockService.addTask).not.toHaveBeenCalled()
+    expect(service.addTask).not.toHaveBeenCalled()
   })
 
   it('should NOT call addTask on the service when input is empty', () => {
     component.inputValue = ''
     component.addTaskToService()
-    expect(mockService.addTask).not.toHaveBeenCalled()
+    expect(service.addTask).not.toHaveBeenCalled()
   })
 
   it('should clear inputValue after adding a taks', () => {
@@ -61,6 +64,6 @@ describe('TaskInputComponent', () => {
     const longText = 'A'.repeat(10)
     component.inputValue = longText
     component.addTaskToService()
-    expect(mockService.addTask).toHaveBeenCalledWith(longText)
+    expect(service.addTask).toHaveBeenCalledWith(longText)
   })
 });

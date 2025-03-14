@@ -16,8 +16,8 @@ export class TaskInputComponent {
   addTaskToService() {
     const taskName = this.inputValue;
     const formattedTaskName = this.service.formatTaskName(taskName);
-    if (formattedTaskName !== '') {
-      this.service.addTask(taskName)
+    if (formattedTaskName) {
+      this.service.addTask(formattedTaskName)
       this.inputValue = ''
     }
   }

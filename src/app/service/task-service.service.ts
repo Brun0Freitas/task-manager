@@ -20,13 +20,14 @@ export class TaskService {
     }
   }
 
-  formatTaskName(taskName: string): string {
-    return taskName.trim().replace(/\s+/g, ' ')
+  formatTaskName(taskName: string): string | null {
+    const formattedTaskName = taskName.trim().replace(/\s+/g, ' ');
+    return formattedTaskName ? formattedTaskName : null;
   }
 
   addTask(taskName: string) {
-    const newTask = this.createTask(taskName)
-    this.tasksSubject.next(this.tasksSubject.value.concat(newTask))
+    const newTask = this.createTask(taskName);
+    this.tasksSubject.next(this.tasksSubject.value.concat(newTask));
   }
 
   toggleTaskStatus(id: string) {
@@ -38,11 +39,9 @@ export class TaskService {
   }
 
   changeTaskName(id: string, newName: string) {
-    const formattedTaskName = this.formatTaskName(newName);
     const currentTasks = this.tasksSubject.getValue();
-
     const updatedTasks = currentTasks.map(task =>
-      task.id === id ? { ...task, text: formattedTaskName } : task
+      task.id === id ? { ...task, text: newName } : task
     );
     this.tasksSubject.next(updatedTasks);
   }
