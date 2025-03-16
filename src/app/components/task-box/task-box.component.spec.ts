@@ -9,6 +9,7 @@ import { ElementRef } from '@angular/core';
 class MockTaskService {
   toggleTaskStatus = jasmine.createSpy('toggleTaskStatus');
   changeTaskName = jasmine.createSpy('changeTaskName');
+  formatTaskName = jasmine.createSpy('formatTaskName');
   removeTask = jasmine.createSpy('removeTask');
   tasks$ = of([]);
 }
@@ -16,14 +17,14 @@ class MockTaskService {
 describe('TaskBoxComponent', () => {
   let component: TaskBoxComponent;
   let fixture: ComponentFixture<TaskBoxComponent>;
-  let mockService: MockTaskService;
+  let service: MockTaskService;
 
   beforeEach(() => {
-    mockService = new MockTaskService();
+    service = new MockTaskService();
 
     TestBed.configureTestingModule({
       declarations: [TaskBoxComponent],
-      providers: [{ provide: TaskService, useValue: mockService }]
+      providers: [{ provide: TaskService, useValue: service }]
     });
     fixture = TestBed.createComponent(TaskBoxComponent);
     component = fixture.componentInstance;
@@ -34,12 +35,14 @@ describe('TaskBoxComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  // toggle status
   it('should call the service to toggle the task status with the correct task ID', () => {
     const mockTask: TaskInterface = { id: '1', text: 'task name', isCompleted: false };
     component.toggleStatusInService(mockTask);
-    expect(mockService.toggleTaskStatus).toHaveBeenCalledOnceWith(mockTask.id);
+    expect(service.toggleTaskStatus).toHaveBeenCalledOnceWith(mockTask.id);
   })
 
+  // set taskt in edit mode
   it('should enable edit mode', () => {
     const mockTask: TaskInterface = { id: '1', text: 'task name', isCompleted: false };
     component.setTaskInEditMode(mockTask);
@@ -68,49 +71,59 @@ describe('TaskBoxComponent', () => {
     expect(component.editInput.nativeElement.select).toHaveBeenCalled();
   }))
 
-  it('should call the service when changed task name is valid, set edit mode to false and set editing task to empty', () => {
+  // change task name in service
+  it(`should call the service when changed task name is valid, 
+    set edit mode to false and set editing task to empty`, () => {
     const mockTask: TaskInterface = { id: '1', text: 'old name', isCompleted: false };
     component.editingTask = mockTask;
+    const mockNewName = 'new name'
     component.editInput = {
-      nativeElement: { value: 'newName' }
+      nativeElement: { value: mockNewName }
     } as ElementRef;
+    service.formatTaskName.and.returnValue(mockNewName)
 
     component.changeTaskNameInService();
-    expect(mockService.changeTaskName).toHaveBeenCalledOnceWith('1', 'newName');
+    expect(service.changeTaskName).toHaveBeenCalledOnceWith('1', mockNewName);
     expect(component.isEditing).toBe(false);
     expect(component.editingTask).toEqual({ id: '', text: '', isCompleted: false });
   })
 
-  it('should NOT call the service if the task name is the same, set edit mode to false and set editing task to empty', () => {
+  it(`should NOT call the service if the task name is the same, 
+    set edit mode to false and set editing task to empty`, () => {
     const mockTask: TaskInterface = { id: '1', text: 'old name', isCompleted: false };
     component.editingTask = mockTask;
+    const mockNewName = 'old name'
     component.editInput = {
-      nativeElement: { value: 'old name' }
+      nativeElement: { value: mockNewName }
     } as ElementRef;
+    service.formatTaskName.and.returnValue(mockNewName);
 
     component.changeTaskNameInService();
-    expect(mockService.changeTaskName).not.toHaveBeenCalled();
+    expect(service.changeTaskName).not.toHaveBeenCalled();
     expect(component.isEditing).toBe(false);
     expect(component.editingTask).toEqual({ id: '', text: '', isCompleted: false });
   })
 
-  it('should NOT call the service if the task name is empty, set edit mode to false and set enditing task to empty', () => {
+  it(`should NOT call the service if the task name is empty, 
+    set edit mode to false and set enditing task to empty`, () => {
     const mockTask: TaskInterface = { id: '1', text: 'old name', isCompleted: false };
     component.editingTask = mockTask;
+    const mockNewName = '    '
     component.editInput = {
-      nativeElement: { value: '     ' }
+      nativeElement: { value: mockNewName }
     } as ElementRef;
+    service.formatTaskName.and.returnValue(null)
 
     component.changeTaskNameInService();
-    expect(mockService.changeTaskName).not.toHaveBeenCalled();
+    expect(service.changeTaskName).not.toHaveBeenCalled();
     expect(component.isEditing).toBe(false);
     expect(component.editingTask).toEqual({ id: '', text: '', isCompleted: false });
   })
 
+  // remove task from service
   it('should request task removal in service with correct task id', () => {
     const mockTaskID = '1';
     component.removeTaskFromService(mockTaskID);
-    expect(mockService.removeTask).toHaveBeenCalledWith(mockTaskID)
+    expect(service.removeTask).toHaveBeenCalledWith(mockTaskID)
   })
-
 });

@@ -55,14 +55,22 @@ describe('TaskInputComponent', () => {
   })
 
   it('should clear inputValue after adding a taks', () => {
-    component.inputValue = 'test'
+    const inputTask = 'test';
+    const formattedTask = inputTask
+    service.formatTaskName.and.returnValue(formattedTask)
+
+    component.inputValue = inputTask
     component.addTaskToService()
     expect(component.inputValue).toBe('')
   })
 
   it('should call addTask on the service with long input', () => {
     const longText = 'A'.repeat(10)
+    const formattedTask = longText
+
     component.inputValue = longText
+    service.formatTaskName.and.returnValue(formattedTask)
+
     component.addTaskToService()
     expect(service.addTask).toHaveBeenCalledWith(longText)
   })
