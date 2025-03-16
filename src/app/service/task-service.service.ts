@@ -20,9 +20,14 @@ export class TaskService {
     }
   }
 
-  addTask(taskText: string) {
-    const newTask = this.createTask(taskText)
-    this.tasksSubject.next(this.tasksSubject.value.concat(newTask))
+  formatTaskName(taskName: string): string | null {
+    const formattedTaskName = taskName.trim().replace(/\s+/g, ' ');
+    return formattedTaskName ? formattedTaskName : null;
+  }
+
+  addTask(taskName: string) {
+    const newTask = this.createTask(taskName);
+    this.tasksSubject.next(this.tasksSubject.value.concat(newTask));
   }
 
   toggleTaskStatus(id: string) {

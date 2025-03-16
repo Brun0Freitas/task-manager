@@ -14,9 +14,10 @@ export class TaskInputComponent {
   constructor(private service: TaskService) { }
 
   addTaskToService() {
-    const taskText = this.inputValue.trim()
-    if (taskText !== '') {
-      this.service.addTask(taskText)
+    const taskName = this.inputValue;
+    const formattedTaskName = this.service.formatTaskName(taskName);
+    if (formattedTaskName) {
+      this.service.addTask(formattedTaskName)
       this.inputValue = ''
     }
   }
