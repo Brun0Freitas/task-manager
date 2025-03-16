@@ -1,0 +1,14 @@
+<div *ngIf="tasks.length > 0">
+    <div>
+        <input
+            id="toggle-all"
+            type="checkbox"
+            [checked]="allTasksCompleted"
+            (change)="toggleAllTasks()"
+        >
+        <label 
+            for="toggle-all">
+            {{ allTasksCompleted ? 'Mark all as incomplete' : 'Mark all as complete'}}
+        </label>
+    </div>
+</div>

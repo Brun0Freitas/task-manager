@@ -16,6 +16,37 @@ describe('TaskService', () => {
     expect(service).toBeTruthy();
   });
 
+  //all task completed observable
+  it('should return true when all tasks are completed', () => {
+    const mockTasks: TaskInterface[] = [
+      { id: '1', text: 'Task 1', isCompleted: true },
+      { id: '2', text: 'Task 2', isCompleted: true },
+    ];
+    service['tasksSubject'].next(mockTasks);
+    service.allTasksCompleted$.subscribe(result => {
+      expect(result).toBe(true);
+    })
+  })
+
+  it('should return false when at least one task is not completed', () => {
+    const mockTasks: TaskInterface[] = [
+      { id: '1', text: 'Task 1', isCompleted: true },
+      { id: '2', text: 'Task 2', isCompleted: false },
+    ];
+    service['tasksSubject'].next(mockTasks);
+    service.allTasksCompleted$.subscribe(result => {
+      expect(result).toBe(false);
+    })
+  })
+
+  it('should return true when there are no tasks', () => {
+    const mockTasks: TaskInterface[] = [];
+    service['tasksSubject'].next(mockTasks);
+    service.allTasksCompleted$.subscribe(result => {
+      expect(result).toBe(true);
+    })
+  })
+
   // format task name
   it('should remove spaces at beginning and end of the string', () => {
     const mockTaskName = '   new name    ';

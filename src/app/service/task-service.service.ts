@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
 import { TaskInterface } from '../types/taskInterface';
@@ -11,6 +11,8 @@ import { TaskInterface } from '../types/taskInterface';
 export class TaskService {
   private tasksSubject = new BehaviorSubject<TaskInterface[]>([])
   public tasks$ = this.tasksSubject.asObservable()
+  public allTasksCompleted$ = this.tasks$.pipe(
+    map(tasksList => tasksList.every(task => task.isCompleted)))
 
   private createTask(taskText: string): TaskInterface {
     return {
