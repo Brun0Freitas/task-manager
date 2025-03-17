@@ -1,0 +1,60 @@
+/* Toolbar CSS */
+.toolbar {
+    background-color: #f4f4f9;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+/* Toggle all checkbox and label */
+.toggle-all-container {
+    display: flex;
+    align-items: center;
+}
+
+#toggle-all {
+    margin-right: 8px;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-right: 15px;
+}
+
+/* Button styling */
+button {
+    background-color: transparent; /* Remove a cor de fundo verde */
+    color: #333; /* Cor escura para os botões */
+    border: 1px solid #ddd; /* Borda suave */
+    padding: 8px 16px;
+    margin: 0 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #f0f0f0; /* Leve efeito de fundo ao passar o mouse */
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Estado do botão ativo (selecionado) */
+button.active {
+    background-color: #007bff;
+    color: white; /* Texto branco quando ativo */
+}
+
+button.active:hover {
+    background-color: #0056b3;
+}

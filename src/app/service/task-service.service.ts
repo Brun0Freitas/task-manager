@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, combineLatest, filter, map } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
 import { TaskInterface } from '../types/taskInterface';
+import { IFilter } from '../types/filterInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,20 @@ import { TaskInterface } from '../types/taskInterface';
 export class TaskService {
   private tasksSubject = new BehaviorSubject<TaskInterface[]>([])
   public tasks$ = this.tasksSubject.asObservable()
+
   public allTasksCompleted$ = this.tasks$.pipe(
     map(tasksList => tasksList.every(task => task.isCompleted)))
+
+  private filterSubject = new BehaviorSubject<IFilter>({ type: 'all' });
+  public filter$ = this.filterSubject.asObservable();
+
+  public filteredTasks$ = combineLatest([this.tasks$, this.filter$]).pipe(
+    map(([tasks, filter]) => {
+      if (filter.type === 'active') return tasks.filter((tasks) => !tasks.isCompleted);
+      if (filter.type === 'completed') return tasks.filter((tasks) => tasks.isCompleted);
+      return tasks;
+    })
+  )
 
   private createTask(taskText: string): TaskInterface {
     return {
@@ -53,5 +66,9 @@ export class TaskService {
     const updatedTasks = currentTasks.filter(task =>
       task.id !== taskID);
     this.tasksSubject.next(updatedTasks);
+  }
+
+  setFilter(filterType: IFilter): void {
+    this.filterSubject.next(filterType)
   }
 }

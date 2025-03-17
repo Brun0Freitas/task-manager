@@ -1,14 +1,27 @@
-<div *ngIf="tasks.length > 0">
-    <div>
-        <input
-            id="toggle-all"
-            type="checkbox"
-            [checked]="allTasksCompleted"
-            (change)="toggleAllTasks()"
-        >
-        <label 
-            for="toggle-all">
-            {{ allTasksCompleted ? 'Mark all as incomplete' : 'Mark all as complete'}}
+<div *ngIf="tasks.length > 0" class="toolbar">
+    <div class="toggle-all-container">
+        <input 
+            id="toggle-all" 
+            type="checkbox" 
+            [checked]="allTasksCompleted" 
+            (change)="toggleAllTasks()">
+        <label for="toggle-all">
+            {{ allTasksCompleted ? 'Mark all as incompleted' : 'Mark all as completed'}}
         </label>
+        <button 
+            (click)="setFilterinService({type: 'all'})"
+            [ngClass]="{'active': currentFilterType.type === 'all'}"
+            >All
+        </button>
+        <button 
+            (click)="setFilterinService({type: 'active'})"
+            [ngClass]="{'active': currentFilterType.type === 'active'}"
+            >Active
+        </button>
+        <button 
+            (click)="setFilterinService({type: 'completed'})"
+            [ngClass]="{'active': currentFilterType.type === 'completed'}"
+            >Completed
+        </button>
     </div>
 </div>

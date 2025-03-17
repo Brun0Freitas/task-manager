@@ -20,8 +20,8 @@ export class TaskBoxComponent implements OnInit {
   constructor(private service: TaskService) { }
 
   ngOnInit(): void {
-    this.service.tasks$.subscribe(taskList => {
-      this.taskList = taskList
+    this.service.filteredTasks$.subscribe(tasks => {
+      this.taskList = tasks
     })
   }
 

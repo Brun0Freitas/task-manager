@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { TaskService } from 'src/app/service/task-service.service';
+import { IFilter } from 'src/app/types/filterInterface';
 import { TaskInterface } from 'src/app/types/taskInterface';
 
 @Component({
@@ -11,6 +12,7 @@ import { TaskInterface } from 'src/app/types/taskInterface';
 export class TaskToolbarComponent implements OnInit {
   tasks: TaskInterface[] = []
   allTasksCompleted: boolean = false
+  currentFilterType: IFilter = { type: 'all' }
 
   constructor(private service: TaskService) { }
 
@@ -26,5 +28,10 @@ export class TaskToolbarComponent implements OnInit {
         this.service.toggleTaskStatus(task.id)
       }
     })
+  }
+
+  setFilterinService(filter: IFilter) {
+    this.service.setFilter(filter)
+    this.currentFilterType = filter
   }
 }
